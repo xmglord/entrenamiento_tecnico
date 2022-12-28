@@ -1,0 +1,1 @@
+No se hicieron los commit de los cambios a los archivos desde antes del capitulo 6 por lo que el control de versiones se perdio en ese intervalo, posteriormente se cuido que se hicieran todos los cambios en cada commit
