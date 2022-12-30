@@ -19,7 +19,8 @@
                             <field name="date_availability" string="Avaible From"/>
                         </group>
                         <group>
-                            <field name="expected_price"/>
+							<field name="expected_price"/>
+							<field name="best_price"/>
                             <field name="selling_price"/>
                         </group>
                     </group>
@@ -34,7 +35,8 @@
                                     <field name="garage"/>
                                     <field name="garden"/>
 									<field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}" string="Garden Area (sqm)"/>
-                                    <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
+									<field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
+									<field name="total_area"/>
                                 </group>
                             </group>
 						</page>

@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 #We use the date util as said in odoo documentation
 from dateutil.relativedelta import relativedelta
@@ -41,3 +41,15 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one("res.partner", string="Buyer", copy=False)
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
+    total_area = fields.Integer(string="Total Area (sqm)", compute="_compute_total_area")
+    best_price = fields.Float(string="Best Offer", compute="_compute_best_price")
+
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for proper in self:
+            proper.total_area = proper.living_area + proper.garden_area
+
+    @api.depends("offer_ids.price")
+    def _compute_best_price(self):
+        for proper in self:
+            proper.best_price = max(proper.offer_ids.mapped("price")) if proper.offer_ids else 0.0
