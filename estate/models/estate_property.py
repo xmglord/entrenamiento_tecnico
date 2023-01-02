@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_compare, float_is_zero
 
 #We use the date util as said in odoo documentation
 from dateutil.relativedelta import relativedelta
@@ -83,8 +82,8 @@ class EstateProperty(models.Model):
     def _check_price_difference(self):
         for prop in self:
             if (
-                not float_is_zero(prop.selling_price, precision_rounding=0.01)
-                and float_compare(prop.selling_price, prop.expected_price * 90.0 / 100.0, precision_rounding=0.01) < 0
+                not fields.float_is_zero(prop.selling_price, precision_rounding=0.01)
+                and fields.float_compare(prop.selling_price, prop.expected_price * 90.0 / 100.0, precision_rounding=0.01) < 0
             ):
                 raise ValidationError(
                     "The selling price must be at least 90% of the expected price! "
