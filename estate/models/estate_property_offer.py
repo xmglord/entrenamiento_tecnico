@@ -67,3 +67,14 @@ class EstatePropertyOffer(models.Model):
                         "buyer_id": None,
                     }
                 )
+
+    @api.model
+    def create(self, vals):
+        if vals.get("property_id") and vals.get("price"):
+            proper = self.env["estate.property"].browse(vals["property_id"])
+            if proper.offer_ids:
+                max_offer = proper.best_price
+                if fields.float_compare(vals["price"], max_offer, precision_rounding = 0.01) <= 0:
+                    raise UserError("The offer must be higher than %.2f" % max_offer)
+            proper.state = "offer_received"
+        return super().create(vals)
