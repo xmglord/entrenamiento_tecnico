@@ -8,7 +8,7 @@
 				<header>
 					<button name="action_sold" type="object" string="Sold" states="new,offer_received"/>
 					<button name="action_sold" type="object" string="Sold" states="offer_accepted" class="oe_highlight"/>
-					<button name="action_cancel" type="object" string="Cancel" states="new,offer_recived,offer_accepted"/>
+					<button name="action_cancel" type="object" string="Cancel" states="new,offer_received,offer_accepted"/>
 					<field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
 				</header>
                 <sheet>
