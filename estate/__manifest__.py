@@ -6,13 +6,14 @@
         'web',
     ],
     'author': "German",
-    'category': 'Customs',
+    'category': 'Real Estate/Brokerage',
     'description': """
     This is the first module
     """,
     # data files always loaded at installation
     'data': [
         "security/ir.model.access.csv",
+        "security/security.xml",
         "views/estate_property_views.xml",
         "views/estate_property_type_views.xml",
         "views/estate_property_tag_views.xml",
