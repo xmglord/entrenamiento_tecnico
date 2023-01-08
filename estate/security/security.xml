@@ -12,6 +12,16 @@
 		<field name="implied_ids" eval="[(4, ref('estate_group_user'))]"/>
 		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
 	</record>
+	<!--
+	<record id="property_company_rule" model="ir.rule">
+    	<field name="name">Property multi-company</field>
+		<field name="model_id" ref="model_estate_property"/>
+    	<field name="domain_force">[
+        	'|', ('company_id', '=', False),
+            	 ('company_id', 'in', company_ids)
+	    ]</field>
+	</record>
+	This rule don't work since it keeps showing records of other companies-->
 
 	<record id="property_agent_rule" model="ir.rule">
     	<field name="name">Agents only see their own properties or not owned.</field>
@@ -19,13 +29,17 @@
     	<field name="perm_read" eval="True"/>
 		<field name="groups" eval="[(4, ref('estate_group_user'))]"/>
 		<field name="domain_force">[
+			'&amp;',
 			'|', ('user_id', '=', False),
-				('user_id', '=', user.id)
+			('user_id', '=', user.id),
+			'|', ('company_id', '=', False),
+            ('company_id', 'in', company_ids)
 			]</field>
 	</record>
+	<!--Then we modify this rule to include the company rule-->
 
 	<record id="property_manager_rule" model="ir.rule">
-    	<field name="name">Managers have full access.</field>
+    	<field name="name">Managers have 2full access.</field>
 	    <field name="model_id" ref="model_estate_property"/>
     	<field name="perm_read" eval="True"/>
 		<field name="groups" eval="[(4, ref('estate_group_manager'))]"/>
