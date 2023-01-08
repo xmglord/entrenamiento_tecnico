@@ -6,6 +6,9 @@ class EstateProperty(models.Model):
 
     def action_sold(self):
         res = super().action_sold()
+        self.check_access_rights('write')
+        self.check_access_rule('write')
+        print(" reached ".center(100, '='))
         for prop in self:
             self.env["account.move"].sudo().create(
                 {
