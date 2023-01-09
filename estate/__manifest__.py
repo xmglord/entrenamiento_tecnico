@@ -21,6 +21,8 @@
         "views/res_users_views.xml",
         "views/estate_menus.xml",
         "data/estate.property.type.csv",
+        "report/estate_reports.xml",
+        "report/estate_report_views.xml",
     ],
     # data files containing optionally loaded demonstration data
     'demo': [
