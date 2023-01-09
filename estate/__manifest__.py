@@ -23,6 +23,9 @@
         "data/estate.property.type.csv",
     ],
     # data files containing optionally loaded demonstration data
-    'demo': [],
+    'demo': [
+        "demo/estate_property.xml",
+        "demo/estate_offer.xml",
+    ],
     'application' : True,
 }
