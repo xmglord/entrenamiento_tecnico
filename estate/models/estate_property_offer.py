@@ -59,14 +59,6 @@ class EstatePropertyOffer(models.Model):
                     "status": "refused"
                 }
             )
-        if "accepted" not in self.mapped("property_id.offer_ids.status"):
-            self.mapped("property_id").write(
-                    {
-                        "state": "new",
-                        "selling_price": 0,
-                        "buyer_id": None,
-                    }
-                )
 
     @api.model
     def create(self, vals):
