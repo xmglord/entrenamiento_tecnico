@@ -39,7 +39,7 @@
 	<!--Then we modify this rule to include the company rule-->
 
 	<record id="property_manager_rule" model="ir.rule">
-    	<field name="name">Managers have 2full access.</field>
+    	<field name="name">Managers have full access.</field>
 	    <field name="model_id" ref="model_estate_property"/>
     	<field name="perm_read" eval="True"/>
 		<field name="groups" eval="[(4, ref('estate_group_manager'))]"/>
