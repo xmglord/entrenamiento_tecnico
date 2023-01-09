@@ -11,7 +11,9 @@
     This is the second module
     """,
     # data files always loaded at installation
-    'data': [],
+    'data': [
+        "report/estate_reports.xml",
+    ],
     # data files containing optionally loaded demonstration data
     'demo': [],
     'application' : True,
