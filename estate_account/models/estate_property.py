@@ -1,5 +1,5 @@
 from odoo import models, Command
-from odoo.exceptions import UserError
+
 
 class EstateProperty(models.Model):
     _inherit = "estate.property"

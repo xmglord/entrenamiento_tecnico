@@ -3,9 +3,10 @@ from odoo.exceptions import UserError
 from odoo.tests import tagged
 from odoo.tests.common import Form
 
+
 @tagged('post_install', '-at_install')
 class EstateTestCase(TransactionCase):
-    
+
     @classmethod
     def setUpClass(cls):
         super(EstateTestCase, cls).setUpClass()
@@ -40,7 +41,7 @@ class EstateTestCase(TransactionCase):
                 'property_id': self.properties[0].id,
                 'price': 100,
                 }])
-    
+
     def test_property_form(self):
         with Form(self.properties[0]) as prop:
             self.assertEqual(prop.garden_area, 0)

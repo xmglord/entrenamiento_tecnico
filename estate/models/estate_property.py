@@ -1,8 +1,9 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
-#We use the date util as said in odoo documentation
+# We use the date util as said in odoo documentation
 from dateutil.relativedelta import relativedelta
+
 
 class EstateProperty(models.Model):
     _name = "estate.property"
@@ -13,23 +14,23 @@ class EstateProperty(models.Model):
         ("check_selling_price", "CHECK(selling_price >= 0)", "The offer price must be positive"),
     ]
 
-    name = fields.Char(required = True)
+    name = fields.Char(required=True)
     description = fields.Text()
     postcode = fields.Char()
-    #Functioncontext_today is recommended for default values
-    date_availability = fields.Date("Available nearest date", default = lambda self: fields.Date.context_today(self)\
-            + relativedelta(months=3), copy= False)
-    expected_price = fields.Float(required = True)
-    selling_price = fields.Float(readonly = True, copy = False)
-    bedrooms = fields.Integer(default = 2)
+    # Functioncontext_today is recommended for default values
+    date_availability = fields.Date("Available nearest date", default=lambda self: fields.Date.context_today(self)
+                                    + relativedelta(months=3), copy=False)
+    expected_price = fields.Float(required=True)
+    selling_price = fields.Float(readonly=True, copy=False)
+    bedrooms = fields.Integer(default=2)
     living_area = fields.Integer()
     facades = fields.Integer()
     garage = fields.Boolean()
     garden = fields.Boolean()
     garden_area = fields.Integer()
-    garden_orientation = fields.Selection(selection=[('north', 'North'),\
-            ('south', 'South'), ('east', 'East'), ('west', 'West')])
-    active = fields.Boolean("Active", default=True)
+    garden_orientation = fields.Selection(selection=[('north', 'North'),
+                                                     ('south', 'South'), ('east', 'East'), ('west', 'West')])
+    active = fields.Boolean(default=True)
     state = fields.Selection(
         selection=[
             ("new", "New"),
@@ -72,29 +73,31 @@ class EstateProperty(models.Model):
 
     def action_sold(self):
         if "canceled" in self.mapped("state"):
-            raise UserError("Canceled properties cannot be sold.")
+            raise UserError(_("Canceled properties cannot be sold."))
         if not any(offer.status == 'accepted' for offer in self.offer_ids):
-            raise UserError("Cannot sell a property that doesn't have an accepted offer.")
+            raise UserError(_("Cannot sell a property that doesn't have an accepted offer."))
         return self.write({"state": "sold"})
 
     def action_cancel(self):
         if "sold" in self.mapped("state"):
-            raise UserError("Sold properties cannot be canceled.")
+            raise UserError(_("Sold properties cannot be canceled."))
         return self.write({"state": "canceled"})
 
     @api.constrains("expected_price", "selling_price")
     def _check_price_difference(self):
         for prop in self:
             if (
-                not fields.float_is_zero(prop.selling_price, precision_rounding=0.01)
-                and fields.float_compare(prop.selling_price, prop.expected_price * 90.0 / 100.0, precision_rounding=0.01) < 0
+                    not fields.float_is_zero(prop.selling_price, precision_rounding=0.01)
+                    and fields.float_compare(prop.selling_price,
+                                             prop.expected_price * 90.0 / 100.0,
+                                             precision_rounding=0.01) < 0
             ):
                 raise ValidationError(
-                    "The selling price must be at least 90% of the expected price! "
-                    + "You must reduce the expected price if you want to accept this offer."
+                    _("The selling price must be at least 90% of the expected price! "
+                      "You must reduce the expected price if you want to accept this offer.").format()
                 )
 
     @api.ondelete(at_uninstall=False)
     def _delete_if_new_or_canceled(self):
         if not set(self.mapped("state")) <= {"new", "canceled"}:
-            raise UserError("Only new and canceled properties can be deleted.")
+            raise UserError(_("Only new and canceled properties can be deleted."))

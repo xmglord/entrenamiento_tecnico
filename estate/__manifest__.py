@@ -1,15 +1,13 @@
 {
     'name': "Real Estate",
-    'version': '1.0',
+    'version': '16.0.0.0.1',
     'depends': [
         'base',
         'web',
     ],
-    'author': "German",
+    'license': 'LGPL-3',
+    'author': "German, Vauxoo",
     'category': 'Real Estate/Brokerage',
-    'description': """
-    This is the first module
-    """,
     # data files always loaded at installation
     'data': [
         "security/ir.model.access.csv",

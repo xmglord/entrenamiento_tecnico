@@ -1,15 +1,13 @@
 {
     'name': "Real Estate Accounting",
-    'version': '1.0',
+    'version': '16.0.0.0.1',
     'depends': [
         'estate',
         'account',
     ],
-    'author': "German",
+    'license': 'LGPL-3',
+    'author': "German, Vauxoo",
     'category': 'Customs',
-    'description': """
-    This is the second module
-    """,
     # data files always loaded at installation
     'data': [
         "report/estate_reports.xml",
